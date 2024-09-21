@@ -1,14 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\{
-    DashboardController as AdminDashboardController
+    DashboardController as AdminDashboardController,
+    GaleriPhotoController
 };
 
 use App\Http\Controllers\User\{
     DashboardController as UserDashboardController
 };
 use App\Http\Controllers\ChirpController;
-use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -29,8 +29,8 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     // ROUTE FOR ADMIN
-    Route::get('/galeri-photo', [PostController::class, 'index'])->name('galeri-photo.index');
     Route::get('admin-dashboard', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
+    Route::resource('galeri-photo', GaleriPhotoController::class)->only(['index', 'store', 'update', 'destroy']);
 
     // ROUTE FOR USER
     Route::get('user-dashboard', [UserDashboardController::class, 'index'])->name('user-dashboard');
